@@ -2,7 +2,15 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const api = axios.create({ baseURL: 'http://127.0.0.1:8000/api' })
+const token = localStorage.getItem('token')
+const api = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  }
+})
 
 const roles        = ref([])
 const selectedRole = ref(null)
@@ -44,9 +52,13 @@ function toggleTip(id) { expanded.value[id] = !expanded.value[id] }
 function reset() { selectedRole.value = null; questions.value = []; error.value = null }
 </script>
 
+
 <template>
   <div class="app">
-    <header>
+  <nav class="top-nav">
+    <router-link to="/dashboard" class="back-btn">← Back to Dashboard</router-link>
+  </nav>
+  <header>
       <div class="header-inner">
         <div class="logo-wrap">
           <span class="logo-badge">PESO</span>
@@ -123,6 +135,9 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
 </template>
 
 <style scoped>
+.top-nav { background: var(--navy); padding: 10px 24px; }
+.back-btn { color: rgba(255,255,255,.7); font-size: 13px; font-weight: 600; text-decoration: none; }
+.back-btn:hover { color: var(--gold); }
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 
 header {
