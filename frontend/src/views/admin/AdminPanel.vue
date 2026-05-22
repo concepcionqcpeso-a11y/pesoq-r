@@ -102,6 +102,23 @@ async function deleteQuestion(q) {
   questions.value = questions.value.filter(x => x.id !== q.id)
 }
 
+// ── Refresh ──
+async function refreshCurrentTab() {
+  if (activeTab.value === 'dashboard') {
+    stats.value = null
+    await loadStats()
+  } else if (activeTab.value === 'users') {
+    users.value = []
+    await loadUsers()
+  } else if (activeTab.value === 'questions') {
+    questions.value = []
+    await loadQuestions()
+  } else if (activeTab.value === 'logs') {
+    logs.value = []
+    await loadLogs()
+  }
+}
+
 // ── Logout ──
 function logout() {
   localStorage.removeItem('admin_token')
@@ -160,8 +177,13 @@ function formatDate(d) {
       <!-- DASHBOARD TAB -->
       <div v-if="activeTab==='dashboard'">
         <div class="page-header">
-          <h2>Dashboard</h2>
-          <p>Overview of the PESO Q&A Prep system</p>
+          <div class="header-top">
+            <div>
+              <h2>Dashboard</h2>
+              <p>Overview of the PESO Q&A Prep system</p>
+            </div>
+            <button class="btn-refresh" @click="refreshCurrentTab" title="Refresh data">Refresh</button>
+          </div>
         </div>
 
         <div v-if="stats" class="stats-grid">
@@ -214,8 +236,13 @@ function formatDate(d) {
       <!-- USERS TAB -->
       <div v-if="activeTab==='users'">
         <div class="page-header">
-          <h2>User Management</h2>
-          <p>View and manage registered jobseekers</p>
+          <div class="header-top">
+            <div>
+              <h2>User Management</h2>
+              <p>View and manage registered jobseekers</p>
+            </div>
+            <button class="btn-refresh" @click="refreshCurrentTab" title="Refresh data">Refresh</button>
+          </div>
         </div>
 
         <div class="toolbar">
@@ -263,8 +290,13 @@ function formatDate(d) {
       <!-- QUESTIONS TAB -->
       <div v-if="activeTab==='questions'">
         <div class="page-header">
-          <h2>Question Management</h2>
-          <p>Add, edit, or delete interview questions</p>
+          <div class="header-top">
+            <div>
+              <h2>Question Management</h2>
+              <p>Add, edit, or delete interview questions</p>
+            </div>
+            <button class="btn-refresh" @click="refreshCurrentTab" title="Refresh data">Refresh</button>
+          </div>
         </div>
 
         <button class="btn-add" @click="openAddQuestion">+ Add New Question</button>
@@ -339,8 +371,13 @@ function formatDate(d) {
       <!-- LOGS TAB -->
       <div v-if="activeTab==='logs'">
         <div class="page-header">
-          <h2>Activity Logs</h2>
-          <p>Recent system activity — last 100 entries</p>
+          <div class="header-top">
+            <div>
+              <h2>Activity Logs</h2>
+              <p>Recent system activity — last 100 entries</p>
+            </div>
+            <button class="btn-refresh" @click="refreshCurrentTab" title="Refresh data">Refresh</button>
+          </div>
         </div>
 
         <div class="table-wrap">
@@ -386,7 +423,7 @@ function formatDate(d) {
 .sidebar-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 36px; }
 .badge {
   background: var(--gold); color: var(--navy);
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 11px; font-weight: 700; letter-spacing: 2px;
   padding: 6px 10px; border-radius: 6px; flex-shrink: 0;
 }
@@ -397,7 +434,7 @@ function formatDate(d) {
 .sidebar-nav button {
   background: none; border: none; color: rgba(255,255,255,.65);
   text-align: left; padding: 12px 16px; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  font-family: Arial, sans-serif; font-size: 14px; font-weight: 500;
   cursor: pointer; transition: all .2s;
 }
 .sidebar-nav button:hover  { background: rgba(255,255,255,.08); color: var(--white); }
@@ -423,8 +460,11 @@ function formatDate(d) {
 /* CONTENT */
 .content { background: var(--cream); padding: 36px; overflow-y: auto; }
 .page-header { margin-bottom: 28px; }
-.page-header h2 { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 4px; }
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.page-header h2 { font-family: Arial, sans-serif; font-size: 26px; margin-bottom: 4px; }
 .page-header p  { color: var(--slate); font-size: 14px; }
+.btn-refresh { background: rgba(11,31,58,.06); border: 1.5px solid var(--navy); color: var(--navy); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; flex-shrink: 0; }
+.btn-refresh:hover { background: var(--navy); color: var(--white); }
 
 /* STATS */
 .stats-grid {
@@ -440,11 +480,11 @@ function formatDate(d) {
 .stat-card.red    { border-color: #e53e3e; }
 .stat-card.gold   { border-color: var(--gold); }
 .stat-icon  { font-size: 24px; margin-bottom: 8px; }
-.stat-value { font-size: 32px; font-weight: 700; font-family: 'Playfair Display', serif; }
+.stat-value { font-size: 32px; font-weight: 700; font-family: Arial, sans-serif; }
 .stat-label { font-size: 13px; color: var(--slate); margin-top: 4px; }
 
 .popular-roles { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
-.popular-roles h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 20px; }
+.popular-roles h3 { font-family: Arial, sans-serif; font-size: 18px; margin-bottom: 20px; }
 .role-bars { display: flex; flex-direction: column; gap: 14px; }
 .role-bar-item { display: flex; align-items: center; gap: 12px; }
 .role-name  { font-size: 13px; font-weight: 600; width: 220px; flex-shrink: 0; }
@@ -457,7 +497,7 @@ function formatDate(d) {
 .search-input {
   width: 100%; max-width: 360px; padding: 10px 16px;
   border: 2px solid #e2e8f0; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+  font-family: Arial, sans-serif; font-size: 14px; outline: none;
 }
 .search-input:focus { border-color: var(--navy); }
 .table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
@@ -520,14 +560,14 @@ tr:hover td { background: #fafbfc; }
   padding: 32px; width: 100%; max-width: 560px;
   box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;
 }
-.modal h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 20px; }
+.modal h3 { font-family: Arial, sans-serif; font-size: 22px; margin-bottom: 20px; }
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--slate); margin-bottom: 6px; letter-spacing: .3px; }
 .form-group select,
 .form-group textarea {
   width: 100%; padding: 10px 14px;
   border: 2px solid #e2e8f0; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-family: Arial, sans-serif; font-size: 14px;
   outline: none; color: var(--navy); transition: border-color .2s; resize: vertical;
 }
 .form-group select:focus,

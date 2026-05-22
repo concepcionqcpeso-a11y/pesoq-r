@@ -6,12 +6,7 @@ import { useAuthStore } from '../stores/auth'
 const router = useRouter()
 const auth   = useAuthStore()
 
-const roles = [
-  { icon: '🎧', label: 'Customer Service / BPO',         key: 'bpo' },
-  { icon: '🍽️', label: 'Service Crew / Food & Beverage', key: 'fnb' },
-  { icon: '🗂️', label: 'Administrative & Office Staff',  key: 'admin' },
-  { icon: '📦', label: 'Logistics & Skilled Trades',      key: 'logistics' },
-]
+// roles removed: Available Job Roles section hidden from dashboard
 
 const tips = [
   { icon: '👁️', title: 'Make Eye Contact',     body: 'Shows confidence and that you are engaged with the interviewer.' },
@@ -59,19 +54,7 @@ async function logout() {
         <router-link to="/prep" class="btn-start">Start Practicing →</router-link>
       </div>
 
-      <div class="section">
-        <div class="section-header">
-          <h3>Available Job Roles</h3>
-          <p>Pick any role below to get your 5 interview questions</p>
-        </div>
-        <div class="roles-grid">
-          <router-link v-for="role in roles" :key="role.key" to="/prep" class="role-card">
-            <span class="role-icon">{{ role.icon }}</span>
-            <span class="role-label">{{ role.label }}</span>
-            <span class="role-arrow">→</span>
-          </router-link>
-        </div>
-      </div>
+
 
       <div class="section">
         <div class="section-header">
@@ -119,7 +102,6 @@ async function logout() {
           <h4>Interview Day Reminder</h4>
           <p>Arrive 10-15 minutes early, bring printed copies of your resume, and stay calm — you've got this!</p>
         </div>
-        <router-link to="/prep" class="btn-prep">Practice Now →</router-link>
       </div>
     </main>
 
@@ -130,7 +112,7 @@ async function logout() {
 </template>
 
 <style scoped>
-.page { min-height: 100vh; display: flex; flex-direction: column; background: var(--cream); }
+.page { min-height: 100vh; display: flex; flex-direction: column; background: var(--cream); font-family: Arial, sans-serif; }
 header { background: var(--navy); color: var(--white); padding: 20px 24px; }
 .header-inner {
   max-width: 960px; margin: 0 auto;
@@ -138,10 +120,10 @@ header { background: var(--navy); color: var(--white); padding: 20px 24px; }
 }
 .brand { display: flex; align-items: center; gap: 14px; }
 .logo-badge {
-  background: var(--gold); color: var(--navy); font-family: 'Playfair Display', serif;
+  background: var(--gold); color: var(--navy); font-family: Arial, sans-serif;
   font-size: 12px; font-weight: 700; letter-spacing: 2px; padding: 6px 12px; border-radius: 6px;
 }
-h1 { font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1; }
+h1 { font-family: Arial, sans-serif; font-size: 22px; line-height: 1; }
 .tagline { font-size: 10px; opacity: .5; margin-top: 2px; }
 .user-bar { display: flex; align-items: center; gap: 16px; }
 .user-info { display: flex; align-items: center; gap: 10px; }
@@ -162,7 +144,7 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 20p
   background: var(--navy); color: var(--white); border-radius: 16px; padding: 32px;
   display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 36px;
 }
-.welcome-banner h2 { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 6px; }
+.welcome-banner h2 { font-family: Arial, sans-serif; font-size: 26px; margin-bottom: 6px; }
 .welcome-banner p  { font-size: 14px; opacity: .75; }
 .btn-start {
   background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 24px;
@@ -171,15 +153,14 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 20p
 .btn-start:hover { background: var(--gold2); transform: translateY(-2px); }
 .section { margin-bottom: 36px; }
 .section-header { margin-bottom: 16px; }
-.section-header h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 4px; }
+.section-header h3 { font-family: Arial, sans-serif; font-size: 20px; margin-bottom: 4px; }
 .section-header p  { font-size: 13px; color: var(--slate); }
 .roles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .role-card {
   display: flex; align-items: center; gap: 14px; background: var(--white);
   border: 2px solid transparent; border-radius: 12px; padding: 18px 20px;
-  text-decoration: none; color: var(--navy); transition: all .2s; box-shadow: var(--shadow);
+  color: var(--navy); box-shadow: var(--shadow);
 }
-.role-card:hover { border-color: var(--gold); transform: translateY(-2px); }
 .role-icon  { font-size: 24px; }
 .role-label { flex: 1; font-size: 14px; font-weight: 600; }
 .role-arrow { color: var(--gold); font-weight: 700; font-size: 18px; }
@@ -188,7 +169,7 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 20p
   background: var(--white); border-radius: 12px; padding: 24px;
   box-shadow: var(--shadow); border-top: 4px solid var(--navy);
 }
-.step-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+.step-num { font-family: Arial, sans-serif; font-size: 32px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
 .step-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
 .step-card p  { font-size: 13px; color: var(--slate); line-height: 1.6; }
 .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -206,12 +187,6 @@ main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 32px 20p
 .reminder-icon { font-size: 36px; flex-shrink: 0; }
 .reminder-banner h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
 .reminder-banner p  { font-size: 13px; color: var(--slate); line-height: 1.6; }
-.btn-prep {
-  background: var(--navy); color: var(--white); border-radius: 10px; padding: 12px 20px;
-  font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap;
-  transition: all .2s; margin-left: auto;
-}
-.btn-prep:hover { background: var(--navy2); }
 footer { background: var(--navy); color: rgba(255,255,255,.4); text-align: center; padding: 20px; font-size: 12px; }
 @media (max-width: 768px) {
   .roles-grid  { grid-template-columns: 1fr; }
@@ -219,7 +194,6 @@ footer { background: var(--navy); color: rgba(255,255,255,.4); text-align: cente
   .tips-grid   { grid-template-columns: 1fr; }
   .welcome-banner { flex-direction: column; align-items: flex-start; }
   .reminder-banner { flex-direction: column; }
-  .btn-prep { margin-left: 0; }
   .header-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>

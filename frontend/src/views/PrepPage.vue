@@ -139,11 +139,11 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
 header { background: var(--navy); color: var(--white); padding: 28px 24px; }
 .header-inner { max-width: 720px; margin: 0 auto; }
 .logo-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-.logo-badge {
-  background: var(--gold); color: var(--navy); font-family: 'Playfair Display', serif;
+logo-badge {
+  background: var(--gold); color: var(--navy); font-family: Arial, sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 2px; padding: 6px 12px; border-radius: 6px;
 }
-h1 { font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; }
+h1 { font-family: Arial, sans-serif; font-size: 26px; line-height: 1; }
 .tagline  { font-size: 11px; opacity: .6; margin-top: 2px; }
 .subtitle { font-size: 14px; opacity: .75; }
 main { flex: 1; max-width: 720px; margin: 0 auto; width: 100%; padding: 32px 20px; }
@@ -174,11 +174,11 @@ main { flex: 1; max-width: 720px; margin: 0 auto; width: 100%; padding: 32px 20p
 }
 .lang-toggle button.active { background: var(--navy); color: var(--white); }
 .question-list { display: flex; flex-direction: column; gap: 16px; }
-.q-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); display: flex; overflow: hidden; }
+.q-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); display: flex; overflow: visible; }
 .q-number {
-  background: var(--navy); color: var(--gold); font-family: 'Playfair Display', serif;
+  background: var(--navy); color: var(--gold); font-family: Arial, sans-serif;
   font-size: 18px; font-weight: 700; writing-mode: vertical-rl;
-  padding: 16px 12px; display: flex; align-items: center; justify-content: center;
+  padding: 16px 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 60px;
 }
 .q-body { padding: 20px; flex: 1; }
 .q-text { font-size: 16px; font-weight: 500; line-height: 1.6; margin-bottom: 14px; }

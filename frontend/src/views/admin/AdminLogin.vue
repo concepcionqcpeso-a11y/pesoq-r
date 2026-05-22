@@ -81,24 +81,23 @@ async function submit() {
 }
 .logo-area { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
 .badge {
-  background: var(--navy); color: var(--gold); font-family: 'Playfair Display', serif;
+  background: var(--navy); color: var(--gold); font-family: Arial, sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 2px; padding: 8px 14px; border-radius: 8px; flex-shrink: 0;
 }
-.logo-area h1 { font-family: 'Playfair Display', serif; font-size: 20px; }
-.logo-area p  { font-size: 10px; color: var(--slate); margin-top: 2px; }
+.logo-area h1 { font-family: Arial, sans-serif; font-size: 20px; }
 .divider { height: 1px; background: #e2e8f0; margin-bottom: 24px; }
-h2  { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 6px; }
+h2  { font-family: Arial, sans-serif; font-size: 22px; margin-bottom: 6px; }
 .sub { font-size: 13px; color: var(--slate); margin-bottom: 24px; }
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
 .form-group input {
   width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; color: var(--navy); transition: border-color .2s;
+  font-family: Arial, sans-serif; font-size: 14px; outline: none; color: var(--navy); transition: border-color .2s;
 }
 .form-group input:focus { border-color: var(--navy); }
 .btn-login {
   width: 100%; padding: 14px; background: var(--navy); color: var(--white);
-  border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+  border: none; border-radius: 10px; font-family: Arial, sans-serif;
   font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s;
   display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px;
 }

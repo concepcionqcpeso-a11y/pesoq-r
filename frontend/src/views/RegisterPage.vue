@@ -117,7 +117,7 @@ async function submit() {
 
           <button class="btn-primary" :disabled="loading" @click="submit">
             <span v-if="loading" class="spinner-sm"></span>
-            <span v-else>Create Account →</span>
+            <span v-else>Create Account </span>
           </button>
 
           <p class="switch-link">
@@ -138,16 +138,16 @@ async function submit() {
   padding: 48px; display: flex; flex-direction: column; gap: 48px;
 }
 .brand { display: flex; align-items: center; gap: 14px; }
-.logo-badge {
+logo-badge {
   background: var(--gold); color: var(--navy);
-  font-family: 'Playfair Display', serif;
+  font-family: Arial, sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 2px;
   padding: 8px 14px; border-radius: 8px; flex-shrink: 0;
 }
-.brand h1 { font-family: 'Playfair Display', serif; font-size: 22px; }
+.brand h1 { font-family: Arial, sans-serif; font-size: 22px; }
 .brand p  { font-size: 11px; opacity: .5; margin-top: 2px; }
-.tagline-block h2 {
-  font-family: 'Playfair Display', serif; font-size: 34px; line-height: 1.2; margin-bottom: 16px;
+ .tagline-block h2 {
+  font-family: Arial, sans-serif; font-size: 34px; line-height: 1.2; margin-bottom: 16px;
 }
 .tagline-block p { font-size: 15px; opacity: .7; line-height: 1.7; }
 .steps { display: flex; flex-direction: column; gap: 16px; margin-top: auto; }
@@ -166,20 +166,20 @@ async function submit() {
   border-radius: 20px; padding: 40px; box-shadow: var(--shadow-lg);
 }
 .card-header { margin-bottom: 24px; }
-.card-header h3 { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 4px; }
+.card-header h3 { font-family: Arial, sans-serif; font-size: 26px; margin-bottom: 4px; }
 .card-header p  { color: var(--slate); font-size: 14px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
 .form-group input {
   width: 100%; padding: 11px 14px; border: 2px solid #e2e8f0; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+  font-family: Arial, sans-serif; font-size: 14px; outline: none;
   color: var(--navy); transition: border-color .2s;
 }
 .form-group input:focus { border-color: var(--navy); }
 .btn-primary {
   width: 100%; padding: 14px; background: var(--navy); color: var(--white);
-  border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+  border: none; border-radius: 10px; font-family: Arial, sans-serif;
   font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s;
   display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;
 }
@@ -223,7 +223,7 @@ async function submit() {
   100% { stroke-dashoffset: 0;   opacity: 1; }
 }
 @keyframes draw-tick { 0% { stroke-dashoffset: 48; } 100% { stroke-dashoffset: 0; } }
-.success-box h3 { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 10px; color: var(--navy); }
+.success-box h3 { font-family: Arial, sans-serif; font-size: 26px; margin-bottom: 10px; color: var(--navy); }
 .success-box p  { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 28px; }
 .progress-bar   { height: 5px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
 .progress-fill  {

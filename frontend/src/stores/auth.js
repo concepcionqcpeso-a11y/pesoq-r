@@ -43,5 +43,5 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('token')
   }
 
-  return { user, token, isLoggedIn, login, logout, api }
+  return { user, token, isLoggedIn, login, logout, setSession, clearSession, api }
 })
