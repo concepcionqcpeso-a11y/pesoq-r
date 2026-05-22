@@ -1,0 +1,100 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup: Install All Dependencies",
+            "type": "shell",
+            "command": "${workspaceFolder}/setup.bat",
+            "windows": {
+                "command": "${workspaceFolder}\\setup.bat"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Setup: Backend (Composer Install)",
+            "type": "shell",
+            "command": "composer",
+            "args": ["install"],
+            "options": {
+                "cwd": "${workspaceFolder}/backend"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Setup: Frontend (NPM Install)",
+            "type": "shell",
+            "command": "npm",
+            "args": ["install"],
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Backend: Start Dev Server",
+            "type": "shell",
+            "command": "php",
+            "args": ["artisan", "serve"],
+            "options": {
+                "cwd": "${workspaceFolder}/backend"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": ".*",
+                    "line": 0,
+                    "column": 0
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Server running on",
+                    "endsPattern": "Server running on"
+                }
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "Frontend: Start Dev Server",
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "dev"],
+            "options": {
+                "cwd": "${workspaceFolder}/frontend"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": ".*",
+                    "line": 0,
+                    "column": 0
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "running at",
+                    "endsPattern": "running at"
+                }
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}
