@@ -1,7 +1,7 @@
 <script setup>
-import PesoApp from './components/PesoApp.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <PesoApp />
+  <RouterView />
 </template>

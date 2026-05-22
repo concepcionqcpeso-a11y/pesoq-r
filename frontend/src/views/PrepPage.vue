@@ -2,7 +2,15 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const api = axios.create({ baseURL: 'http://127.0.0.1:8000/api' })
+const token  = localStorage.getItem('token')
+const api    = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  }
+})
 
 const roles        = ref([])
 const selectedRole = ref(null)
@@ -26,10 +34,10 @@ onMounted(async () => {
 
 async function selectRole(role) {
   selectedRole.value = role
-  questions.value = []
-  expanded.value = {}
-  loading.value = true
-  error.value = null
+  questions.value    = []
+  expanded.value     = {}
+  loading.value      = true
+  error.value        = null
   try {
     const { data } = await api.get(`/questions/${role.role_key}`)
     questions.value = data
@@ -46,6 +54,10 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
 
 <template>
   <div class="app">
+    <nav class="top-nav">
+      <router-link to="/dashboard" class="back-btn">← Back to Dashboard</router-link>
+    </nav>
+
     <header>
       <div class="header-inner">
         <div class="logo-wrap">
@@ -60,14 +72,12 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
     </header>
 
     <main>
-      <!-- STEP 1: Role Selection -->
       <section v-if="!selectedRole" class="step">
         <div class="step-label"><span>01</span> Choose Your Job Role</div>
         <p class="step-hint">Select the position you are applying for today.</p>
         <div v-if="error" class="error-box">{{ error }}</div>
         <div class="role-grid">
-          <button v-for="role in roles" :key="role.role_key"
-            class="role-card" @click="selectRole(role)">
+          <button v-for="role in roles" :key="role.role_key" class="role-card" @click="selectRole(role)">
             <span class="role-icon-lg">{{ roleIcon(role.role_key) }}</span>
             <span class="role-label-text">{{ role.role_label }}</span>
             <span class="role-arrow">→</span>
@@ -75,7 +85,6 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
         </div>
       </section>
 
-      <!-- STEP 2: Questions -->
       <section v-else class="step">
         <div class="toolbar">
           <button class="btn-back" @click="reset">← Back</button>
@@ -124,83 +133,58 @@ function reset() { selectedRole.value = null; questions.value = []; error.value 
 
 <style scoped>
 .app { min-height: 100vh; display: flex; flex-direction: column; }
-
-header {
-  background: var(--navy);
-  color: var(--white);
-  padding: 28px 24px;
-}
+.top-nav { background: var(--navy); padding: 10px 24px; }
+.back-btn { color: rgba(255,255,255,.7); font-size: 13px; font-weight: 600; text-decoration: none; }
+.back-btn:hover { color: var(--gold); }
+header { background: var(--navy); color: var(--white); padding: 28px 24px; }
 .header-inner { max-width: 720px; margin: 0 auto; }
 .logo-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
 .logo-badge {
-  background: var(--gold); color: var(--navy);
-  font-family: 'Playfair Display', serif;
-  font-size: 13px; font-weight: 700; letter-spacing: 2px;
-  padding: 6px 12px; border-radius: 6px;
+  background: var(--gold); color: var(--navy); font-family: 'Playfair Display', serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 2px; padding: 6px 12px; border-radius: 6px;
 }
 h1 { font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; }
-.tagline { font-size: 11px; opacity: .6; margin-top: 2px; letter-spacing: .5px; }
+.tagline  { font-size: 11px; opacity: .6; margin-top: 2px; }
 .subtitle { font-size: 14px; opacity: .75; }
-
 main { flex: 1; max-width: 720px; margin: 0 auto; width: 100%; padding: 32px 20px; }
-
-.step-label { font-size: 11px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-.step-label span { background: var(--navy); color: var(--white);
-  padding: 2px 8px; border-radius: 4px; margin-right: 8px; }
+.step-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.step-label span { background: var(--navy); color: var(--white); padding: 2px 8px; border-radius: 4px; margin-right: 8px; }
 .step-hint { color: var(--slate); font-size: 14px; margin-bottom: 24px; }
-
 .role-grid { display: grid; gap: 14px; }
 .role-card {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--white); border: 2px solid transparent;
-  border-radius: var(--radius); padding: 20px 24px;
-  cursor: pointer; transition: all .2s; box-shadow: var(--shadow);
-  text-align: left; width: 100%;
+  display: flex; align-items: center; gap: 16px; background: var(--white);
+  border: 2px solid transparent; border-radius: var(--radius); padding: 20px 24px;
+  cursor: pointer; transition: all .2s; box-shadow: var(--shadow); text-align: left; width: 100%;
 }
 .role-card:hover { border-color: var(--gold); transform: translateY(-2px); }
-.role-icon-lg { font-size: 28px; }
+.role-icon-lg   { font-size: 28px; }
 .role-label-text { flex: 1; font-size: 16px; font-weight: 600; color: var(--navy); }
 .role-arrow { color: var(--gold); font-size: 20px; font-weight: 700; }
-
-.toolbar {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 28px; flex-wrap: wrap;
-}
+.toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
 .btn-back {
   background: none; border: 2px solid var(--navy); color: var(--navy);
-  border-radius: 8px; padding: 8px 16px; font-weight: 600;
-  cursor: pointer; transition: all .2s;
+  border-radius: 8px; padding: 8px 16px; font-weight: 600; cursor: pointer; transition: all .2s;
 }
 .btn-back:hover { background: var(--navy); color: var(--white); }
-.role-title {
-  flex: 1; font-weight: 700; font-size: 15px;
-  display: flex; align-items: center; gap: 8px;
-}
+.role-title { flex: 1; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
 .lang-toggle { display: flex; border: 2px solid var(--navy); border-radius: 8px; overflow: hidden; }
 .lang-toggle button {
   padding: 8px 16px; font-weight: 700; font-size: 13px;
   background: none; border: none; cursor: pointer; color: var(--navy); transition: all .2s;
 }
 .lang-toggle button.active { background: var(--navy); color: var(--white); }
-
 .question-list { display: flex; flex-direction: column; gap: 16px; }
-.q-card {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); display: flex; overflow: hidden;
-}
+.q-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); display: flex; overflow: hidden; }
 .q-number {
-  background: var(--navy); color: var(--gold);
-  font-family: 'Playfair Display', serif; font-size: 18px;
-  font-weight: 700; writing-mode: vertical-rl;
+  background: var(--navy); color: var(--gold); font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; writing-mode: vertical-rl;
   padding: 16px 12px; display: flex; align-items: center; justify-content: center;
 }
 .q-body { padding: 20px; flex: 1; }
 .q-text { font-size: 16px; font-weight: 500; line-height: 1.6; margin-bottom: 14px; }
 .tip-toggle {
   background: none; border: 1.5px solid var(--gold); color: var(--navy);
-  border-radius: 6px; padding: 6px 14px; font-size: 12px;
-  font-weight: 600; cursor: pointer; transition: all .2s;
+  border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s;
 }
 .tip-toggle:hover { background: var(--gold); }
 .tip-box {
@@ -208,7 +192,6 @@ main { flex: 1; max-width: 720px; margin: 0 auto; width: 100%; padding: 32px 20p
   border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 14px; line-height: 1.6;
 }
 .tip-box strong { display: block; margin-bottom: 6px; color: var(--slate); font-size: 12px; }
-
 .loading-wrap { display: flex; align-items: center; gap: 14px; padding: 32px 0; color: var(--slate); }
 .spinner {
   width: 28px; height: 28px; border: 3px solid #e2e8f0;
@@ -220,12 +203,8 @@ main { flex: 1; max-width: 720px; margin: 0 auto; width: 100%; padding: 32px 20p
   padding: 14px 18px; color: #c53030; font-size: 14px; margin-bottom: 20px;
 }
 .save-hint {
-  margin-top: 24px; text-align: center; font-size: 13px;
-  color: var(--slate); padding: 16px; border: 1.5px dashed #cbd5e0; border-radius: 10px;
+  margin-top: 24px; text-align: center; font-size: 13px; color: var(--slate);
+  padding: 16px; border: 1.5px dashed #cbd5e0; border-radius: 10px;
 }
-
-footer {
-  background: var(--navy); color: rgba(255,255,255,.5);
-  text-align: center; padding: 20px; font-size: 12px; letter-spacing: .5px;
-}
+footer { background: var(--navy); color: rgba(255,255,255,.5); text-align: center; padding: 20px; font-size: 12px; }
 </style>
