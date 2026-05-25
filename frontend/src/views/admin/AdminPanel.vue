@@ -120,10 +120,20 @@ async function refreshCurrentTab() {
 }
 
 // ── Logout ──
-function logout() {
-  localStorage.removeItem('admin_token')
-  localStorage.removeItem('admin_user')
-  router.push('/admin-peso-2024')
+async function logout() {
+  try {
+    const authApi = axios.create({
+      baseURL: 'http://127.0.0.1:8000/api',
+      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+    })
+    await authApi.post('/logout')
+  } catch (error) {
+    console.error('Logout API error:', error)
+  } finally {
+    localStorage.removeItem('admin_token')
+    localStorage.removeItem('admin_user')
+    router.push('/admin-peso-2024')
+  }
 }
 
 function formatDate(d) {

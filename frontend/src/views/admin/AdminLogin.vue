@@ -60,12 +60,8 @@ async function submit() {
 
       <button class="btn-login" :disabled="loading" @click="submit">
         <span v-if="loading" class="spinner"></span>
-        <span v-else>Access Admin Panel →</span>
+        <span v-else>Access Admin Panel </span>
       </button>
-
-      <p class="back-link">
-        <router-link to="/login">← Back to Jobseeker Login</router-link>
-      </p>
     </div>
   </div>
 </template>
@@ -112,7 +108,4 @@ h2  { font-family: Arial, sans-serif; font-size: 22px; margin-bottom: 6px; }
   background: #fff5f5; border: 1.5px solid #fc8181; border-radius: 10px;
   padding: 12px 16px; color: var(--red); font-size: 13px; margin-bottom: 16px;
 }
-.back-link { text-align: center; margin-top: 20px; font-size: 13px; }
-.back-link a { color: var(--slate); text-decoration: none; font-weight: 600; }
-.back-link a:hover { color: var(--navy); }
 </style>
